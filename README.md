@@ -28,7 +28,8 @@ Se aplicaron los principios SOLID y POO
 - Login (POST): https://localhost:7175/api/auth/v1/login
 
 
-
+También pueden visualizar las pruebas de manera gráfica en: 
+https://mirandamx.dev/servicio-login-de-usuario-klu/
 
 ## A) Decisiones técnicas
 
