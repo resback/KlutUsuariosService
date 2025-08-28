@@ -21,6 +21,9 @@ namespace UsuariosAuth.Services.Implementations
         public Task<RefreshToken?> ObtenerVigenteAsync(int usuarioId, string token) =>
             _db.RefreshTokens.FirstOrDefaultAsync(x => x.UsuarioId == usuarioId && x.Token == token && x.EstaVigente);
 
+        public Task<RefreshToken?> ObtenerVigentePorTokenAsync(string token) => // NUEVO
+            _db.RefreshTokens.FirstOrDefaultAsync(x => x.Token == token && x.EstaVigente);
+
         public async Task RevocarAsync(RefreshToken rt, string? reemplazadoPor = null)
         {
             rt.RevocadoEn = DateTime.UtcNow;
@@ -36,4 +39,3 @@ namespace UsuariosAuth.Services.Implementations
         }
     }
 }
-

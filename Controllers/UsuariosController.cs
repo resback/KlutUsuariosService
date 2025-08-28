@@ -8,7 +8,7 @@ using UsuariosAuth.Services.Interfaces;
 namespace UsuariosAuth.Controllers
 {
     [ApiController]
-    [Route("api/usuarios")]
+    [Route("api/usuarios/v1")]
     [Authorize]
     public class UsuariosController : ControllerBase
     {

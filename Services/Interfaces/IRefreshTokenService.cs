@@ -6,8 +6,8 @@ namespace UsuariosAuth.Services.Interfaces
     {
         Task<RefreshToken> CrearAsync(int usuarioId, string token, DateTime expiraEn);
         Task<RefreshToken?> ObtenerVigenteAsync(int usuarioId, string token);
+        Task<RefreshToken?> ObtenerVigentePorTokenAsync(string token);  
         Task RevocarAsync(RefreshToken rt, string? reemplazadoPor = null);
         Task RevocarTodosAsync(int usuarioId);
     }
 }
-

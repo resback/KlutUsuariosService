@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using UsuariosAuth.Common;
 using UsuariosAuth.Domain.Entities;
 using UsuariosAuth.Infrastructure.Data;
@@ -19,9 +20,23 @@ namespace UsuariosAuth.Services.Implementations
 
         public async Task<Usuario> CrearUsuarioAsync(string nombre, string correo, string password)
         {
+            // Normaliza y valida formato
+            correo = (correo ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(correo))
+                throw new InvalidOperationException("El correo es requerido");
+
+            var emailVal = new EmailAddressAttribute();
+            if (!emailVal.IsValid(correo))
+                throw new InvalidOperationException("El correo no tiene un formato válido");
+
+            // Normaliza a minúsculas (útil para búsquedas y unicidad)
+            correo = correo.ToLowerInvariant();
+
+            // Unicidad
             if (await _db.Usuarios.AnyAsync(x => x.Correo == correo))
                 throw new InvalidOperationException("El correo ya está registrado");
 
+            // Hasheo y persistencia
             PasswordHasher.CrearHash(password, out var hash, out var salt);
             var u = new Usuario
             {
